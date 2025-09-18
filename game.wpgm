@@ -11,8 +11,10 @@ program farmville {
 
 	//  VISUALES
  	game.addVisualCharacter(personaje)
- 	game.addVisual(new Maiz()) // Se agrega a modo de prueba
- 	keyboard.m().onPressDo({personaje.sembrar(Maiz)})
+ 	//game.addVisual(new Maiz()) // Se agrega a modo de prueba
+ 	keyboard.m().onPressDo({personaje.sembrarMaiz()})
+	keyboard.n().onPressDo({personaje.sembrarTrigo()})
+	keyboard.b().onPressDo({personaje.sembrarTomaco()})
  	//  COMIENZA
 	game.start()
 }
