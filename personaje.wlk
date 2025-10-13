@@ -20,10 +20,32 @@ object personaje {
 	}
 	method validarSiHayPlanta(posicion){
 		if(game.getObjectsIn(posicion).isEmpty()){
-			self.error("no hay nada que regar")
+			self.error("no hayplanta aqui")
 		}
 	}
 	method obtenerPlanta(){
 		 return game.uniqueCollider(self)
 		}
+	method cosechar(){
+		self.validarSiHayPlanta(position)
+		self.obtenerCosecha()
+	}
+	method obtenerCosecha(){
+		self.validarMaduracion(self.obtenerPlanta())
+		cosecha.cosechar(self.obtenerPlanta())
+		game.removeVisual(self.obtenerPlanta())
+	}
+	method validarMaduracion(planta){
+		if(planta.maduracion() == "no madura"){
+			self.error("no se puede cosechar ")
+		}
+	}
+}
+
+object cosecha{
+	const property cosechadas = #{}
+	method cosechar(planta){
+		cosechadas.add(planta)
+
+	}
 }

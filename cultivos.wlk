@@ -3,6 +3,7 @@ import personaje.*
 class Maiz {
 	var property position = game.at(1,1)
 	var property image = "corn_baby.png"
+	var property maduracion = "no madura"
 	method position() {
 		// TODO: hacer que aparezca donde lo plante Hector
 		return position
@@ -11,6 +12,12 @@ class Maiz {
 	method crecer(){
 		estadoMaiz.cambiarEstado()
 		image = estadoMaiz.estado()
+		self.madurar()
+	}
+	method madurar(){
+		 if(image == "corn_adult.png"){
+			maduracion = "madura"
+		}
 	}
 }
 object estadoMaiz{
@@ -69,10 +76,9 @@ class Tomaco{
 		// TODO: hacer que devuelva la imagen que corresponde
 		return image
 	}
-		method crecer(){
+	method crecer(){
 		self.validarCeldaArriba()
 		self.validarFondoAbajo()
-		//self.error("no puede madurar")
 	}
 	method validarCeldaArriba(){
 		if(not game.getObjectsIn(position.up(1)).isEmpty()){
@@ -84,11 +90,8 @@ class Tomaco{
 		if(game.getObjectsIn(position.at(position.x(),0))){
 			self.error("hay una planta abajo")
 		}
-/*
-	method noPuedeMadurar(){
-		if( position.y() == 10 and not position.y()+1.isEmpty() and not position.y(0).isEmpty()){
-			self.error("no puede madurar el tomaco")
-		}
-	}*/
+
+	}
 }
-}
+
+
