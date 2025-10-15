@@ -41,20 +41,22 @@ class Trigo{
 
 object estadoTrigo{
 	var property image = "wheat_0.png"
+	var property maduracion = 0
 	method estado(){
 		return image
 	}
 	method cambiarEstado(){
-		return if(image == "wheat_0.png"){
-			image = "wheat_1.png"
-		}else if(image == "wheat_1.png"){
-			image = "wheat_2.png"
-		}else if(image == "wheat_2.png"){
-			image = "wheat_3.png"
-		}else{
+		maduracion += 1
+		image = "wheat_"+maduracion+".png"
+		self.reinicioDeCiclo()
+	}
+	method reinicioDeCiclo(){
+		if(maduracion == 4){
 			image = "wheat_0.png"
+			maduracion = 0
 		}
 	}
+
 }
 class Tomaco{
 	var property position = game.at(1,1)
@@ -70,28 +72,23 @@ class Tomaco{
 		method crecer(){
 		self.validarCeldaArriba()
 		self.validarFondoAbajo()
-		estadoTomaco.cambiarEstado()
-		image = estadoTomaco.estado()
-		position = position.y() +1
+		//self.error("no puede madurar")
 	}
 	method validarCeldaArriba(){
-		if(position.y() == 10){
-			self.error("no puede subir")
+		if(not game.getObjectsIn(position.up(1)).isEmpty()){
+			self.error("no se puede plantar, hay planta arriba")
 		}
 	}
+	
 	method validarFondoAbajo(){
-		if(position.y().isEmpty()){
-			self.error("no puede bajar")
+		if(game.getObjectsIn(position.at(position.x(),0))){
+			self.error("hay una planta abajo")
 		}
-	}
+/*
+	method noPuedeMadurar(){
+		if( position.y() == 10 and not position.y()+1.isEmpty() and not position.y(0).isEmpty()){
+			self.error("no puede madurar el tomaco")
+		}
+	}*/
 }
-
-object estadoTomaco{
-	var property image = "tomaco_baby.png"
-	method estado(){
-		return image
-	}
-	method cambiarEstado(){
-			image = "tomaco.png"
-	}
 }
