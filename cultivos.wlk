@@ -3,16 +3,15 @@ import personaje.*
 class Maiz {
 	var property position = game.at(1,1)
 	var property image = "corn_baby.png"
-	var property maduracionPlanta = estadoMaiz.maduracion()
+	var property maduracionPlanta = "no madura"
 	method position() {
-
 		return position
 	}
 
 	method crecer(){
 		estadoMaiz.cambiarEstado()
 		image = estadoMaiz.estado()
-		estadoMaiz.madurar()
+		maduracionPlanta = estadoMaiz.maduracion()
 	}
 
 }
@@ -23,7 +22,8 @@ object estadoMaiz{
 		return image
 	}
 	method cambiarEstado(){
-		image = "corn_adult.png"		
+		image = "corn_adult.png"	
+		self.madurar()	
 	}
 	method madurar(){
 		 if(image == "corn_adult.png"){
@@ -34,7 +34,7 @@ object estadoMaiz{
 class Trigo{
 	var property position = game.at(1,1)
 	var property image = "wheat_0.png" 
-	var property maduracionPlanta = estadoTrigo.maduracion() 
+	var property maduracionPlanta = "no madura" 
 	method position() {
 
 		return position
@@ -46,6 +46,8 @@ class Trigo{
 	method crecer(){
 		estadoTrigo.cambiarEstado()
 		image = estadoTrigo.estado()
+		estadoTrigo.madurar()
+		maduracionPlanta = estadoTrigo.maduracion()
 	}
 }
 
@@ -59,7 +61,6 @@ object estadoTrigo{
 	method cambiarEstado(){
 		estadoMaduracion += 1
 		image = "wheat_"+estadoMaduracion+".png"
-		self.cambiarAMadura()
 		self.reinicioDeCiclo()
 	}
 	method reinicioDeCiclo(){
@@ -69,7 +70,7 @@ object estadoTrigo{
 			maduracion = "no madura"
 		}
 	}
-	method cambiarAMadura(){
+	method madurar(){
 		 if(estadoMaduracion >= 2 ){
 			maduracion = "madura"
 		}
@@ -79,21 +80,37 @@ object estadoTrigo{
 class Tomaco{
 	var property position = game.at(1,1)
 	var property image =  "tomaco_baby.png"
+	var property maduracionPlanta = "no madura"
 	method position() {
-	
 		return position
 	}
 	method image() {
-	
 		return image
 	}
 	method crecer(){
-		self.validarCeldaArriba()
-		self.validarFondoAbajo()
+		//self.validarCeldaArriba()
+		estadoTomaco.cambiarEstado()
+		image = estadoTomaco.estado()
+		maduracionPlanta = estadoTomaco.maduracion()
 	}
-	method validarCeldaArriba(){
-		if(not game.getObjectsIn(position.up(1)).isEmpty()){
-			self.error("no se puede plantar, hay planta arriba")
+	/*method validarCeldaArriba(){
+			//estadoTomaco.cambiarEstado()
+			//image = estadoTomaco.estado()
+		if(game.getObjectsIn(position.up(1)).isEmpty() and image == "tomaco_baby.png"){
+			game.removeVisual(self)
+			position = position.up(1)
+			game.addVisual(self)
+			estadoTomaco.cambiarEstado()
+			estadoTomaco.madurar()
+			image = estadoTomaco.estado()
+		}else if(game.getObjectsIn(position.down(2)).isEmpty() and image == "tomaco_baby.png"){
+			game.removeVisual(self)
+			position = position.down(2)
+			game.addVisual(self)
+			estadoTomaco.cambiarEstado()
+			estadoTomaco.madurar()
+			image = estadoTomaco.estado()
+			game.addVisual(self)
 		}
 	}
 	
@@ -102,11 +119,29 @@ class Tomaco{
 			self.error("hay una planta abajo")
 		}
 
-	}
+	}*/
 }
 
 object estadoTomaco{
-	
+	var property image = "tomaco_baby.png"
+	var property maduracion = "no madura"
+	method estado(){
+		return image
+	}
+	method maduracion(){
+		return maduracion
+	}
+	method madurar(){
+		if(image == "tomaco.png"){
+			maduracion = "madura"
+		}
+	}
+	method cambiarEstado(){
+		if(image == "tomaco_baby.png"){
+			image = "tomaco.png"
+			self.madurar()
+		}
+	}
 }
 
 
