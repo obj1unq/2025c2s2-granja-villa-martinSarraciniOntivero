@@ -6,28 +6,28 @@ object personaje {
 	const property image = "mplayer.png"
 
 	method sembrar(cultivo){
-		self.validarEspacio(position)
+		self.validarEspacio()
 		game.addVisual(cultivo)
 	}
-	method validarEspacio(ubicacion){
-		if( game.getObjectsIn(ubicacion).isEmpty()){
+	method validarEspacio(){
+		if( not game.colliders(self).isEmpty()){
 			self.error("no se puede cultivar aqui")
 		}
 	}
 	method regar(){
-		self.validarSiHayPlanta(position)
+		self.validarSiHayPlanta()
 		self.obtenerPlanta().crecer()
 	}
-	method validarSiHayPlanta(posicion){
-		if(game.getObjectsIn(posicion).isEmpty()){
-			self.error("no hayplanta aqui")
+	method validarSiHayPlanta(){
+		if(game.colliders(self).isEmpty()){
+			self.error("no hay planta aqui")
 		}
 	}
 	method obtenerPlanta(){
 		 return game.uniqueCollider(self)
 		}
 	method cosechar(){
-		self.validarSiHayPlanta(position)
+		self.validarSiHayPlanta()
 		self.obtenerCosecha()
 	}
 	method obtenerCosecha(){
@@ -36,7 +36,7 @@ object personaje {
 		game.removeVisual(self.obtenerPlanta())
 	}
 	method validarMaduracion(planta){
-		if(planta.maduracion() == "no madura"){
+		if(planta.maduracionPlanta() == "no madura"){
 			self.error("no se puede cosechar ")
 		}
 	}

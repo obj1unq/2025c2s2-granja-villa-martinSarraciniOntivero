@@ -3,16 +3,27 @@ import personaje.*
 class Maiz {
 	var property position = game.at(1,1)
 	var property image = "corn_baby.png"
-	var property maduracion = "no madura"
+	var property maduracionPlanta = estadoMaiz.maduracion()
 	method position() {
-		// TODO: hacer que aparezca donde lo plante Hector
+
 		return position
 	}
 
 	method crecer(){
 		estadoMaiz.cambiarEstado()
 		image = estadoMaiz.estado()
-		self.madurar()
+		estadoMaiz.madurar()
+	}
+
+}
+object estadoMaiz{
+	var property image = "corn_baby.png"
+	var property maduracion = "no madura"
+	method estado(){
+		return image
+	}
+	method cambiarEstado(){
+		image = "corn_adult.png"		
 	}
 	method madurar(){
 		 if(image == "corn_adult.png"){
@@ -20,24 +31,16 @@ class Maiz {
 		}
 	}
 }
-object estadoMaiz{
-	var property image = "corn_baby.png"
-	method estado(){
-		return image
-	}
-	method cambiarEstado(){
-		image = "corn_adult.png"		
-	}
-}
 class Trigo{
 	var property position = game.at(1,1)
 	var property image = "wheat_0.png" 
+	var property maduracionPlanta = estadoTrigo.maduracion() 
 	method position() {
-		// TODO: hacer que aparezca donde lo plante Hector
+
 		return position
 	}
 	method image() {
-		// TODO: hacer que devuelva la imagen que corresponde
+
 		return image
 	}
 	method crecer(){
@@ -48,19 +51,27 @@ class Trigo{
 
 object estadoTrigo{
 	var property image = "wheat_0.png"
-	var property maduracion = 0
+	var property maduracion = "no madura"
+	var property estadoMaduracion = 0
 	method estado(){
 		return image
 	}
 	method cambiarEstado(){
-		maduracion += 1
-		image = "wheat_"+maduracion+".png"
+		estadoMaduracion += 1
+		image = "wheat_"+estadoMaduracion+".png"
+		self.cambiarAMadura()
 		self.reinicioDeCiclo()
 	}
 	method reinicioDeCiclo(){
-		if(maduracion == 4){
+		if(estadoMaduracion == 4){
 			image = "wheat_0.png"
-			maduracion = 0
+			estadoMaduracion = 0
+			maduracion = "no madura"
+		}
+	}
+	method cambiarAMadura(){
+		 if(estadoMaduracion >= 2 ){
+			maduracion = "madura"
 		}
 	}
 
@@ -69,11 +80,11 @@ class Tomaco{
 	var property position = game.at(1,1)
 	var property image =  "tomaco_baby.png"
 	method position() {
-		// TODO: hacer que aparezca donde lo plante Hector
+	
 		return position
 	}
 	method image() {
-		// TODO: hacer que devuelva la imagen que corresponde
+	
 		return image
 	}
 	method crecer(){
@@ -92,6 +103,10 @@ class Tomaco{
 		}
 
 	}
+}
+
+object estadoTomaco{
+	
 }
 
 
